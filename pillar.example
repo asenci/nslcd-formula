@@ -1,0 +1,34 @@
+nslcd:
+  lookup:
+    config: '/etc/nslcd.conf'
+    nslcd_group: ldap
+    nslcd_user: nslcd
+    pkgs:
+      - nslcd
+      - libnss-ldapd
+      - libpam-ldapd
+    service:
+      name: nslcd
+
+  config:
+    uri: ldap://127.0.0.1/
+    base: dc=example,dc=com
+    ssl: start_tls
+    tls_reqcert: never
+    pagesize: 1000
+    referrals: 'off'
+    idle_timelimit: 800
+    filter:
+      passwd: (&(objectClass=user)(objectClass=person)(!(objectClass=computer)))
+      group: (|(objectClass=group)(objectClass=person))
+    map:
+      passwd:
+        uid: cn
+        uidNumber: objectSid:S-1-5-21-3623811015-3361044348-30300820
+        gidNumber: objectSid:S-1-5-21-3623811015-3361044348-30300820
+        homeDirectory: '"/home/$cn"'
+        gecos: displayName
+        loginShell: '"/bin/bash"'
+      group:
+        gidNumber: objectSid:S-1-5-21-3623811015-3361044348-30300820
+

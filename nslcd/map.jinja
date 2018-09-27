@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{% import_yaml 'nslcd/defaults.yaml' as defaults %}
+{% import_yaml "nslcd/osfamilymap.yaml" as osfamilymap %}
+
+{% set nslcd = salt['grains.filter_by'](
+    defaults,
+    merge=salt['grains.filter_by'](
+        osfamilymap,
+        grain='os_family',
+        merge=salt['pillar.get']('nslcd:lookup', {}),
+    ),
+    base='nslcd')
+%}

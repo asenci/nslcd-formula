@@ -1,0 +1,6 @@
+Debian:
+  pkgs:
+    - nslcd
+    - libnss-ldapd
+    - libpam-ldapd
+  nslcd_group: nslcd

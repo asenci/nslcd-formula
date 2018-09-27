@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+nslcd:
+  config: /etc/nslcd.conf
+  nslcd_group: ldap
+  nslcd_user: nslcd
+  pkgs:
+    - nss-pam-ldapd
+  service:
+    name: nslcd
